@@ -54,7 +54,7 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git z sublime docker docker-compose history history-substring-search encode64 extract osx zsh-syntax-highlighting)
+plugins=(git z golang sublime docker docker-compose history history-substring-search encode64 extract osx zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -91,15 +91,18 @@ fpath=(/usr/local/share/zsh-completions $fpath)
 export NVM_DIR="$HOME/.nvm"
 . "/usr/local/opt/nvm/nvm.sh"
 
-export HOMEBREW_GITHUB_API_TOKEN='8dfdeff2e4ebf98528503adc761be41a9cb2b923'
+export HOMEBREW_GITHUB_API_TOKEN='7d4073d32e638cd02b60350d478c4ec235c025f1'
 export PATH="$(brew --prefix homebrew/php/php71)/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
-export PATH="/usr/local/opt/go@1.7/bin:$PATH"
-export GOPATH=$HOME/go_pro
+export PATH="/usr/local/opt/go/bin:$PATH"
+export GOPATH=$HOME/go
+export GOBIN=$HOME/go/bin
 export PATH=$HOME/.composer/vendor/bin:$HOME/bin:$GOPATH/bin:$PATH
 
 # alias
 alias vim=mvim
-eval $(thefuck --alias)
 
 export DEFAULT_USER="$USER"
+export https_proxy=http://127.0.0.1:6152
+export http_proxy=http://127.0.0.1:6152
+export all_proxy=socks5://127.0.0.1:1080

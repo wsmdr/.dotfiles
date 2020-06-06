@@ -5,26 +5,28 @@ set nocompatible               " be iMproved
 " 让配置变更立即生效
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
-set nu "设置行号
-set autoindent "自动缩进
-set ts=4 "这个是设置tap的大小为4个空格
-set nobackup	
+" 设置行号
+set nu 
 
-set encoding=utf8 "文件编码
-syntax on " 语法高亮
+" 自动缩进
+set autoindent
+"
+set ts=4
+"
+set nobackup
+
+set noswapfile
+
+"
+
 autocmd InsertLeave * se nocul
 autocmd InsertEnter * se cul
-" 用浅色高亮当前行
-set showmatch
-" 高亮显示对应的括号
-set whichwrap=b,s,<,>,[,]
-" 开启Normal或Visual模式下Backspace键，空格键，左方向键，右方向键，Insert或replace模式下左方向键，右方向键跳行的功能。
 
-colorscheme molokai
-"colorscheme SolarizedDark
-" 设置颜色主题
-"set guifont=Menlo:h12 " 设置字体为  字体：大小
-set guifont=Source\ Code\ Pro\ for\ Powerline:h12 " 设置字体为  字体：大小
+"
+set showmatch
+"
+set whichwrap=b,s,<,>,[,]
+
 
 "设置默认打开窗口大小  
 set lines=70 columns=200 
@@ -45,66 +47,87 @@ set foldmethod=syntax
 set nofoldenable
 set autochdir
 
+set encoding=utf8
+"
+syntax on
+language messages zh_CN.utf-8 
 " 显示中文帮助
-if version >= 603
 set helplang=cn
-set encoding=utf-8
-endif
+" 设置为双字宽显示，否则无法完整显示如:☆
+set ambiwidth=double
+
 let mapleader = ","
 let g:mapleader = ","
 
+" ==== 系统剪切板复制粘贴 ====
+" v 模式下复制内容到系统剪切板
+vmap <Leader>c "+yy
+" n 模式下复制一行到系统剪切板
+nmap <Leader>c "+yy
+" n 模式下粘贴系统剪切板的内容
+nmap <Leader>v "+p
 
-filetype off                   " required!  
-  
-" 插件配置
-set rtp+=~/.vim/bundle/vundle/  
-call vundle#rc()  
-  
-" let Vundle manage Vundle  
-" required!   
-"这是vundle本身的设置  
-Bundle 'gmarik/vundle'    
-   
- " My Bundles here:  
- "这里是设置你自己自定义的插件的设置vundle设置，注意：下载的插件git为：https://github.com/godlygeek/tabular.git，则设置为Bundle 'godlygeek/tabular';https://github.com/gmarik/vundle.git设置则为 Bundle 'gmarik/vundle'    
- " original repos on github  
- Bundle 'godlygeek/tabular'  
-  
- " vim-scripts repos，vim-scripts的访问地址，格式则如下：  
- Bundle 'L9'  
- Bundle 'FuzzyFinder'  
- " non github repos ，非git的访问地址的，格式如下：  
- Bundle 'git://git.wincent.com/command-t.git'  
- " ...  
- Bundle 'Valloric/YouCompleteMe'
- " NERDTree
- Bundle 'scrooloose/nerdtree'
- Bundle 'Xuyuanp/nerdtree-git-plugin'
- Bundle 'airblade/vim-gitgutter'
- " Powerline
- Bundle 'Lokaltog/vim-powerline'
- " ctrlp
- Bundle 'ctrlp.vim'
- Bundle 'nathanaelkane/vim-indent-guides'
- Bundle 'mattn/emmet-vim'
- Bundle 'majutsushi/tagbar'
- Bundle 'fholgado/minibufexpl.vim'
- Bundle 'easymotion/vim-easymotion'
- Bundle 'terryma/vim-multiple-cursors'
- Bundle 'scrooloose/nerdcommenter'
- Bundle 'mbbill/undotree'
 
- filetype plugin indent on     " required!  
- "  
- " Brief help  
- " :BundleList          - list configured bundles  
- " :BundleInstall(!)    - install(update) bundles  
- " :BundleSearch(!) foo - search(or refresh cache first) for foo  
- " :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles  
- "  
- " see :h vundle for more details or wiki for FAQ  
- " NOTE: comments after Bundle command are not allowed..  
 
+filetype off                   " required! 
+
+
+" Plugins
+call plug#begin('~/.vim/plugged')
+
+" theme
+Plug 'dracula/vim', { 'as': 'dracula' }
+
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+
+Plug 'junegunn/vim-easy-align'
+
+" 
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+
+Plug 'ryanoasis/vim-devicons'
+Plug 'mhinz/vim-startify'
+Plug 'majutsushi/tagbar'
+
+" golang
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+" go 中的代码追踪，输入 gd 就可以自动跳转
+Plug 'dgryski/vim-godef'
+
+Plug 'brooth/far.vim'
+
+" markdown 插件
+Plug 'iamcco/mathjax-support-for-mkdp'
+Plug 'iamcco/markdown-preview.vim'
+
+" 自动补全括号的插件，包括小括号，中括号，以及花括号
+Plug 'jiangmiao/auto-pairs'
+" 可以在文档中显示 git 信息
+Plug 'airblade/vim-gitgutter'
+Plug 'junegunn/gv.vim'
+Plug 'tpope/vim-fugitive'
+
+Plug 'tpope/vim-surround'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+" Use release branch (recommend)
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Or build from source code by using yarn: https://yarnpkg.com
+Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+
+Plug 'tpope/vim-commentary'
+
+Plug 'jceb/vim-orgmode'
+
+" Initialize plugin system
+call plug#end()
+
+
+" nerdtree
 " 树配置
 let NERDTreeWinPos='left'
 let NERDTreeWinSize=30
@@ -114,66 +137,89 @@ let NERDTreeShowHidden=1
 let NERDTreeMinimalUI=1
 " 删除文件时自动删除文件对应 buffer
 let NERDTreeAutoDeleteBuffer=1
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 map <D-1> :NERDTreeToggle<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") &&b:NERDTreeType == "primary") | q | endif
 
- " 自动补全配置
-set completeopt=longest,menu    "让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif    "离开插入模式后自动关闭预览窗口
-inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"    "回车即选中当前项
-"上下左右键的行为 会显示其他信息
-inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
-inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
-inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
-inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
+" 
+colorscheme dracula
+" 设置字体为  字体：大小
+"set guifont=Source\ Code\ Pro\ for\ Powerline:h12 
+set guifont=SauceCodePro\ NF:h12 
 
-"youcompleteme  默认tab  s-tab 和自动补全冲突
-"let g:ycm_key_list_select_completion=['<c-n>']
-let g:ycm_key_list_select_completion = ['<Down>']
-"let g:ycm_key_list_previous_completion=['<c-p>']
-let g:ycm_key_list_previous_completion = ['<Up>']
-let g:ycm_confirm_extra_conf=0 "关闭加载.ycm_extra_conf.py提示
+let g:airline_theme='powerlineish'
+let g:airline_powerline_fonts = 1 
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
 
-let g:ycm_collect_identifiers_from_tags_files=1    " 开启 YCM 基于标签引擎
-let g:ycm_min_num_of_chars_for_completion=2    " 从第2个键入字符就开始罗列匹配项
-let g:ycm_cache_omnifunc=0    " 禁止缓存匹配项,每次都重新生成匹配项
-let g:ycm_seed_identifiers_with_syntax=1    " 语法关键字补全
-nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>    "force recomile with syntastic
-"nnoremap <leader>lo :lopen<CR>    "open locationlist
-"nnoremap <leader>lc :lclose<CR>    "close locationlist
-inoremap <leader><leader> <C-x><C-o>
-"在注释输入中也能补全
-let g:ycm_complete_in_comments = 1
-"在字符串输入中也能补全
-let g:ycm_complete_in_strings = 1
-"注释和字符串中的文字也会被收入补全
-let g:ycm_collect_identifiers_from_comments_and_strings = 0
+"==============================================================================
+" vim-go 插件
+"==============================================================================
+let g:go_fmt_command = "goimports" " 格式化将默认的 gofmt 替换
+let g:go_autodetect_gopath = 1
+let g:go_list_type = "quickfix"
 
-nnoremap <D-b> :YcmCompleter GoToDefinitionElseDeclaration<CR> " 跳转到定义处
+let g:go_version_warning = 1
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_generate_tags = 1
 
-" Powerline
-" 设置状态栏主题风格
-let g:Powerline_colorscheme='solarized256'
-let g:Powerline_symbols = 'fancy'
-
-"vim-indent-guides
-" 随 vim 自启动
-let g:indent_guides_enable_on_vim_startup=1
-" 从第二层开始可视化显示缩进
-let g:indent_guides_start_level=2
-" 色块宽度
-let g:indent_guides_guide_size=1
-" 快捷键 i 开/关缩进可视化
-:nmap <silent> <Leader>i <Plug>IndentGuidesToggle
+let g:godef_split=2
 
 " tagbar
-nmap <D-7> :TagbarToggle<CR>
-""设置tagbar使用的ctags的插件,必须要设置对    
-let g:tagbar_ctags_bin='/usr/local/Cellar/ctags/5.8_1/bin/ctags'
+nmap <F12> :TagbarToggle<CR>
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+\ }
 
-" 显示/隐藏 MiniBufExplorer 窗口
-map <Leader>bl :MBEToggle<cr>
-" buffer 切换快捷键
-map <C-Tab> :MBEbn<cr>
-map <C-S-Tab> :MBEbp<cr>
+" Empty value to disable preview window altogether
+let g:fzf_preview_window = ''
+" Always enable preview window on the right with 60% width
+let g:fzf_preview_window = 'right:60%'
+" [Buffers] 如果可能跳到已存在窗口
+let g:fzf_buffers_jump = 1
 
+nmap <C-p> :Files<CR>
+nmap <C-e> :Buffers<CR>
+nmap <C-a><C-g> :Ag<CR>
+let g:fzf_action = { 'ctrl-e': 'edit' }
+
+
+
+" 分屏窗口移动, Smart way to move between windows
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l

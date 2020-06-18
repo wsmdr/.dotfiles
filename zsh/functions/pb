@@ -1,0 +1,50 @@
+pb() {
+  emulate -L zsh
+  case $1 in
+    --rec)
+      asciinema rec /tmp/$$.json
+      local url=$(pb_core < /tmp/$$.json)
+      print "${${url%/json}/.ee/.ee/t}"
+      ;;
+    --tmux)
+      tmux capture-pane -J -p | pb_core
+      ;;
+    *)
+      pb_core ${*:1}
+      ;;
+  esac
+}
+
+pb_core() {
+  local file==(<<<'')
+
+  if (( $# == 0 )); then
+    cat > $file
+  else
+    file=$1
+  fi
+
+  local res=${(f)"$(curl -F "c=@-" "https://fars.ee" < $file)"}
+  local -A info=(${(s/: /)${res//$'\n'/: }})
+  local url=$info[url]
+
+  [[ -d ~/.cache/pb ]] || mkdir ~/.cache/pb
+  print $res > ~/.cache/pb/$info[short]
+ 
+  local mime=$(file --mime-type -b $file)
+  case $mime in
+    image/*)
+      local type=${${file:e}:-${mime#*/}}
+      print "$url.$type" ;;
+    text/x-*)
+      local lang=${${file:e}:-${mime#*-}}
+      print "$url/$lang" ;;
+    application/json)
+      print "$url/json" ;;
+    *) print "$url${(M)file%.*}" ;;
+  esac
+
+  (( $# == 0 )) && rm $file
+}
+
+pb $*

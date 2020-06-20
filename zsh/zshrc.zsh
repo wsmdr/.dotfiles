@@ -44,8 +44,6 @@ ZSH_AUTOSUGGEST_COMPLETION_IGNORE='( |man |pikaur -S )*'
 GENCOMP_DIR=$ZINIT_DIR/zsh/completions
 
 
-GENCOMP_DIR=$ZINIT_DIR/zsh/completions
-
 forgit_add=gai
 forgit_diff=gdi
 forgit_log=glgi
@@ -91,6 +89,7 @@ zinit light Aloxaf/fzf-tab
 
 zinit for \
     OMZ::lib/clipboard.zsh \
+    OMZ::lib/completion.zsh \
     OMZ::lib/directories.zsh \
     OMZ::lib/git.zsh \
     OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh \
@@ -100,6 +99,7 @@ zinit for \
     OMZ::plugins/history/history.plugin.zsh \
     OMZ::plugins/golang/golang.plugin.zsh \
     OMZ::plugins/pip/pip.plugin.zsh \
+    OMZ::plugins/extract/extract.plugin.zsh \
     OMZ::plugins/encode64/encode64.plugin.zsh \
     OMZ::plugins/docker-compose/docker-compose.plugin.zsh \
     OMZ::plugins/git/git.plugin.zsh
@@ -114,11 +114,11 @@ zinit snippet https://cheat.sh/:zsh
 zinit as="completion" for \
     OMZ::plugins/cargo/_cargo \
     OMZ::plugins/rust/_rust \
+    OMZ::plugins/extract/_extract \
     OMZ::plugins/fd/_fd \
     OMZ::plugins/docker/_docker \
     OMZ::plugins/docker-compose/_docker-compose \
-    OMZ::plugins/pip/_pip \
-    OMZ::plugins/fd/_fd
+    OMZ::plugins/pip/_pip 
 
 
 zpcompinit; zpcdreplay

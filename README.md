@@ -1,7 +1,10 @@
 # .dotfiles
 
+## i3wm
+
+## ideavim
+
+## Neovim
 ## Vim
 
-## Zsh oh-my-zsh
-
-## php cs fixer
+## Zsh zinit

@@ -112,7 +112,6 @@ zinit snippet https://cheat.sh/:zsh
 
 
 zinit as="completion" for \
-    OMZ::plugins/cargo/_cargo \
     OMZ::plugins/rust/_rust \
     OMZ::plugins/extract/_extract \
     OMZ::plugins/fd/_fd \
@@ -135,5 +134,3 @@ zinit light-mode for \
 ## theme
 zinit ice depth=1
 zinit light romkatv/powerlevel10k    
-
-

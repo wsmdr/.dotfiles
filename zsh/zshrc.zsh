@@ -112,7 +112,6 @@ zinit snippet https://cheat.sh/:zsh
 
 
 zinit as="completion" for \
-    OMZ::plugins/rust/_rust \
     OMZ::plugins/extract/_extract \
     OMZ::plugins/fd/_fd \
     OMZ::plugins/docker/_docker \

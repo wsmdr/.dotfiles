@@ -40,6 +40,8 @@ else
 
     if [[ "$(uname -m)" == "arm64" ]]; then
       export PATH="/opt/homebrew/opt/python@3.12/libexec/bin:$PATH"
+    else
+      export  PATH="/usr/local/opt/python@3.12/libexec/bin:$PATH" 
     fi  
 
     export NVM_DIR="$HOME/.nvm"
@@ -56,6 +58,7 @@ else
 
 fi
 
+# fiz-draculatheme
 export FZF_DEFAULT_OPTS='--color=fg:#f8f8f2,bg:#282a36,hl:#bd93f9 --color=fg+:#f8f8f2,bg+:#44475a,hl+:#bd93f9 --color=info:#ffb86c,prompt:#50fa7b,pointer:#ff79c6 --color=marker:#ff79c6,spinner:#ffb86c,header:#6272a4'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
@@ -68,3 +71,6 @@ alias ls='lsd -h'  la='ls -la'  lt='ls --tree'  ll='ls -l'  l='ls'
 export SSLKEYLOGFILE=$HOME/logs/sslkey.log
 
 export PATH="/usr/local/sbin:$PATH"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+

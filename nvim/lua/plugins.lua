@@ -11,6 +11,15 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+local dracula = {
+  "Mofiqul/dracula.nvim",
+  name = "dracula",
+  lazy = false,
+  priority = 1000,
+  config = function()
+    vim.cmd.colorscheme 'dracula-soft'
+  end
+}
 
 -- Config lualine
 local lualine = {
@@ -21,7 +30,7 @@ local lualine = {
       require('lualine').setup {
         options = {
           icons_enabled = false,
-          theme = 'catppuccin',
+          theme = 'dracula',
           component_separators = '|',
           section_separators = '',
         },
@@ -32,6 +41,7 @@ local lualine = {
 
 
 require("lazy").setup({
+    dracula,
     lualine,
 })
 

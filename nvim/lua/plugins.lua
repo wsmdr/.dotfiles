@@ -11,13 +11,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Config indent_blankline
-local indent_blankline = {
-    'lukas-reineke/indent-blankline.nvim', -- Add indentation guides even on blank lines
-    main = "ibl",
-    opts = {}
-}
-
 
 
 require("lazy").setup("plugins-config")

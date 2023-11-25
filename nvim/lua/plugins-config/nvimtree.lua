@@ -4,7 +4,7 @@ local nvimtree = {
     dependencies = 'nvim-tree/nvim-web-devicons',
     cmd = { 'NvimTreeToggle', 'NvimTreeFocus' },
     keys = {
-        { "<leader>e", "<Cmd>NvimTreeToggle<CR>" }
+        { "<A-1>", "<Cmd>NvimTreeToggle<CR>" }
     },
     config = function()
         require('nvim-tree').setup({
@@ -49,5 +49,21 @@ local bufferline = {
         }
     end
 }
+
+-- Config autopairs
+local autopairs = {
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    config = function()
+      require("nvim-autopairs").setup {}
+      -- config autopairs
+      local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+      local nvim_cmp = require('cmp')
+      nvim_cmp.event:on(
+        'confirm_done',
+        cmp_autopairs.on_confirm_done()
+      )
+    end
+  }
 
 return { nvimtree, bufferline }

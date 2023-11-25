@@ -57,6 +57,8 @@ vim.o.timeoutlen = 500
 -- split window 从下边和右边出现
 vim.o.splitbelow = true
 vim.o.splitright = true
+
+vim.opt.clipboard = 'unnamedplus' -- use system clipboard
 -- 自动补全不自动选中
 vim.g.completeopt = "menu,menuone,noselect,noinsert"
 -- 样式
@@ -77,5 +79,3 @@ vim.o.showtabline = 2
 -- 使用增强状态栏插件后不再需要 vim 的模式提示
 vim.o.showmode = false
 
--- Buffer Settings --
-vim.b.fileenconding = "utf-8"

@@ -22,6 +22,7 @@ export GOPROXY=https://goproxy.cn,direct
 
 export GOPATH=$HOME/gopath
 export GOBIN=$GOPATH/bin
+export PATH=$GOBIN:$PATH
 
 
 if [[ "$(uname -s)" == "Linux" ]];then
@@ -40,22 +41,24 @@ else
 
     if [[ "$(uname -m)" == "arm64" ]]; then
       export PATH="/opt/homebrew/opt/python@3.12/libexec/bin:$PATH"
+      export NVM_DIR="$HOME/.nvm"
+      [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+      [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
     else
       export  PATH="/usr/local/opt/python@3.12/libexec/bin:$PATH" 
+      export NVM_DIR="$HOME/.nvm"
+      [ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+      [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
     fi  
 
-    export NVM_DIR="$HOME/.nvm"
-  [ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-  
-  if type brew &>/dev/null
-  then
-    FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 
-    autoload -Uz compinit
-    compinit
-  fi
+    if type brew &>/dev/null
+    then
+      FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 
+      autoload -Uz compinit
+      compinit
+    fi
 fi
 
 # fiz-draculatheme

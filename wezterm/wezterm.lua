@@ -1,5 +1,5 @@
 local wezterm = require('wezterm')
-local keys = require('keys.keys')
+local bindings = require('bindings.bindings')
 local ssh_domains = require('ssh_list')
 local launch_menu = {}
 local default_prog = {}
@@ -55,7 +55,8 @@ local config = {
   window_close_confirmation = "NeverPrompt",
   -- default_prog = default_prog,
   -- launch_menu = launch_menu,
-  keys = keys,
+  keys = bindings.keys,
+  mouse_bindings = bindings.mouse_bindings,
   -- tab bar
   enable_tab_bar = true,
   hide_tab_bar_if_only_one_tab = false,

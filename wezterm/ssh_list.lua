@@ -7,7 +7,9 @@ for host, config in pairs(wezterm.enumerate_ssh_hosts()) do
     -- the name can be anything you want; we're just using the hostname
     name = host,
     -- remote_address must be set to `host` for the ssh config to apply to it
-    remote_address = host,
+    remote_address = config['hostname'],
+
+    username = config['user'],
 
     -- if you don't have wezterm's mux server installed on the remote
     -- host, you may wish to set multiplexing = "None" to use a direct
@@ -23,6 +25,4 @@ for host, config in pairs(wezterm.enumerate_ssh_hosts()) do
   })
 end
 
-return {
-  ssh_domains = ssh_domains,
-}
+return ssh_domains

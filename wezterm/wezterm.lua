@@ -5,6 +5,13 @@ local launch_menu = {}
 local default_prog = {}
 
 local config = {
+  background = {
+    {
+      source = { File = wezterm.config_dir .. "/background.jpg"},
+      attachment = 'Fixed',
+      opacity = 1.0,
+    },
+  },
   term = "xterm-256color",
   front_end = 'WebGpu',
   webgpu_power_preference = 'HighPerformance',
@@ -89,6 +96,10 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 
   config.default_prog = default_prog
   config.launch_menu = launch_menu
+
+  table.insert(bindings.keys, {
+    key = 'v', mods = 'CTRL', action = wezterm.action.PasteFrom('Clipboard') 
+  })
 elseif wezterm.target_triple == "x86_64-apple-darwin" then
   -- default_prog = { '/bin/zsh' }
   table.insert(launch_menu, {
@@ -99,15 +110,84 @@ elseif wezterm.target_triple == "x86_64-apple-darwin" then
     label = 'Bash',
     args = { 'bash' },
   })
+
   config.launch_menu = launch_menu
 elseif wezterm.target_triple == "x86_64-unknown-linux-gnu" then
-
+  table.insert(bindings.keys, {
+    key = 'v', mods = 'CTRL', action = wezterm.action.PasteFrom('Clipboard') 
+  })
 end
 
 wezterm.log_error('Home ' .. wezterm.home_dir)
 
 config.ssh_domains = ssh_domains
 
+local function tab_title(tab_info)
+  local title = tab_info.tab_title
+  -- if the tab title is explicitly set, take that
+  if title and #title > 0 then
+    return title
+  end
+  -- Otherwise, use the title from the active pane
+  -- in that tab
+  return tab_info.active_pane.title
+end
 
+-- The filled in variant of the < symbol
+local SOLID_LEFT_ARROW = wezterm.nerdfonts.pl_right_hard_divider
+
+-- The filled in variant of the > symbol
+local SOLID_RIGHT_ARROW = wezterm.nerdfonts.pl_left_hard_divider
+
+wezterm.on(
+  'format-tab-title',
+  function(tab, tabs, panes, config, hover, max_width)
+    local edge_background = '#0b0022'
+    local background = '#1b1032'
+    local foreground = '#808080'
+
+    if tab.is_active then
+      background = '#2b2042'
+      foreground = '#c0c0c0'
+    elseif hover then
+      background = '#3b3052'
+      foreground = '#909090'
+    end
+
+    local edge_foreground = background
+
+    local title = tab_title(tab)
+
+    -- ensure that the titles fit in the available space,
+    -- and that we have room for the edges.
+    title = wezterm.truncate_right(title, max_width - 2)
+
+    return {
+      { Background = { Color = edge_background } },
+      { Foreground = { Color = edge_foreground } },
+      { Text = SOLID_LEFT_ARROW },
+      { Background = { Color = background } },
+      { Foreground = { Color = foreground } },
+      { Text = title },
+      { Background = { Color = edge_background } },
+      { Foreground = { Color = edge_foreground } },
+      { Text = SOLID_RIGHT_ARROW },
+    }
+  end
+)
+
+wezterm.on(
+  "update-right-status",
+  function(window)
+    local date = wezterm.strftime("%Y-%m-%d %H:%M:%S ")
+    window:set_right_status(
+      wezterm.format(
+        {
+          { Text = date }
+        }
+      )
+    )
+  end
+)
 
 return config

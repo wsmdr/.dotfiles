@@ -22,8 +22,8 @@ local config = {
     'powershell.exe',
   },
 
-  initial_cols = 150,
-  initial_rows = 60,
+  initial_cols = 130,
+  initial_rows = 40,
   font = wezterm.font 'Hack Nerd Font Mono',
   color_scheme = 'Dracula (Official)',
   font_size = 13,
@@ -75,7 +75,7 @@ local ssh_cmd = { "ssh" }
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
   table.insert(launch_menu, {
     label = 'PowerShell',
-    args = { "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" }
+    args = { "C:\\Program Files\\PowerShell\\7\\pwsh.exe" }
   })
   table.insert(launch_menu, {
     label = 'CMD',
@@ -85,7 +85,7 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
     label = 'Git Bash',
     args = { 'C:\\Program Files\\Git\\git-bash.exe' }
   })
-  default_prog = { "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" }
+  default_prog = { "C:\\Program Files\\PowerShell\\7\\pwsh.exe" }
 
   config.default_prog = default_prog
   config.launch_menu = launch_menu
